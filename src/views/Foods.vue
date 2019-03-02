@@ -16,47 +16,12 @@
 </template>
 
 <script>
+import api from "@/api";
+
 export default {
   data() {
     return {
-      data: [
-        {
-          brand: "",
-          food: "Toasted almonds",
-          qty: "8 piece (s)",
-          portion: "10 g",
-          kcal: "61",
-          protein: "2.1",
-          carbs: "1.8",
-          fat: "5.5",
-          s_fat: "",
-          t_fat: "",
-          m_fat: "",
-          p_fat: "",
-          sugar: "",
-          fiber: "",
-          sodium: "",
-          v12: ""
-        },
-        {
-          brand: "Orgain",
-          food: "Organic protein powder - Chocolate",
-          qty: "2 scoop (s)",
-          portion: "46 g",
-          kcal: "152",
-          protein: "21",
-          carbs: "15",
-          fat: "4",
-          s_fat: "0.5",
-          t_fat: "0",
-          m_fat: "2.5",
-          p_fat: "1",
-          sugar: "0",
-          fiber: "7",
-          sodium: "200",
-          v12: ""
-        }
-      ],
+      data: [],
       columns: [
         { field: "brand", label: "brand" },
         { field: "food", label: "food" },
@@ -76,6 +41,32 @@ export default {
         { field: "v12", label: "v12" }
       ]
     };
+  },
+  created() {
+    api.foods().then(res => {
+      const foods = res.data.response;
+
+      foods.forEach(food => {
+        this.data.push({
+          brand: food.brand_name,
+          food: food.food_name,
+          qty: `${food.quantity} ${food.measure}`,
+          portion: `${food.portion} ${food.unit}`,
+          kcal: food.kcal,
+          protein: food.protein,
+          carbs: food.carbs,
+          fat: food.fat,
+          s_fat: food.saturated_fat,
+          t_fat: food.trans_fat,
+          m_fat: food.mono_fat,
+          p_fat: food.poly_fat,
+          sugar: food.sugar,
+          fiber: food.fiber,
+          sodium: food.sodium,
+          v12: food.vitamin_b12
+        });
+      });
+    });
   }
 };
 </script>
