@@ -10,7 +10,13 @@
       </div>
     </section>
     <div class="container is-fluid">
-      <b-table :data="data" :columns="columns" default-sort="food"></b-table>
+      <b-table
+        :data="data"
+        :columns="columns"
+        default-sort="food"
+        :hoverable="true"
+        :loading="isLoading"
+      ></b-table>
     </div>
   </section>
 </template>
@@ -23,7 +29,6 @@ export default {
     return {
       data: [],
       columns: [
-        { field: "brand", label: "brand" },
         { field: "food", label: "food" },
         { field: "qty", label: "qty." },
         { field: "portion", label: "portion" },
@@ -39,17 +44,19 @@ export default {
         { field: "fiber", label: "fiber (g)" },
         { field: "sodium", label: "sodium (mg)" },
         { field: "v12", label: "v12" }
-      ]
+      ],
+      isLoading: true
     };
   },
   created() {
+    this.isLoading = true;
+
     api.foods().then(res => {
       const foods = res.data.response;
 
       foods.forEach(food => {
         this.data.push({
-          brand: food.brand_name,
-          food: food.food_name,
+          food: `${food.food_name} (${food.brand_name})`,
           qty: `${food.quantity} ${food.measure}`,
           portion: `${food.portion} ${food.unit}`,
           kcal: food.kcal,
@@ -66,6 +73,8 @@ export default {
           v12: food.vitamin_b12
         });
       });
+
+      this.isLoading = false;
     });
   }
 };
