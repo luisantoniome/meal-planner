@@ -6,11 +6,16 @@
           <h1 class="title">
             Foods
           </h1>
+          <button class="button is-info" @click="addFoodForm = true">
+            Add food
+          </button>
         </div>
       </div>
     </section>
     <div class="container is-fluid">
+      <AddFood v-if="addFoodForm" />
       <b-table
+        v-else
         :data="data"
         :columns="columns"
         default-sort="food"
@@ -23,8 +28,12 @@
 
 <script>
 import api from "@/api";
+import AddFood from "@/views/AddFood.vue";
 
 export default {
+  components: {
+    AddFood
+  },
   data() {
     return {
       data: [],
@@ -45,7 +54,8 @@ export default {
         { field: "sodium", label: "sodium (mg)" },
         { field: "v12", label: "v12" }
       ],
-      isLoading: true
+      isLoading: true,
+      addFoodForm: false
     };
   },
   created() {
