@@ -6,14 +6,18 @@
           <h1 class="title">
             Foods
           </h1>
-          <button class="button is-info" @click="addFoodForm = true">
+          <button
+            class="button is-info"
+            @click="addFoodForm = true"
+            v-if="!addFoodForm"
+          >
             Add food
           </button>
         </div>
       </div>
     </section>
     <div class="container is-fluid">
-      <AddFood v-if="addFoodForm" />
+      <AddFood v-if="addFoodForm" @cancel="addFoodForm = false" />
       <b-table
         v-else
         :data="data"
