@@ -20,7 +20,10 @@
       </div>
     </section>
     <section class="container is-fluid">
-      <MealCard v-for="meal in meals" :key="meal" />
+      <MealCard v-for="meal in meals" :key="meal.id" :meal="meal" />
+      <button class="button is-info" @click="addMeal()">
+        Add meal
+      </button>
     </section>
   </div>
 </template>
@@ -88,18 +91,20 @@ export default {
       },
       meals: [
         {
+          id: 1,
           foods: [
             {
               food: "Proteína en polvo",
               kcal: 159
             },
             {
-              food: "Proteína en polvo",
-              kcal: 159
+              food: "Fresas",
+              kcal: 15
             }
           ]
         },
         {
+          id: 2,
           foods: [
             {
               food: "Proteína en polvo",
@@ -113,6 +118,14 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    addMeal() {
+      this.meals.push({
+        id: 3,
+        foods: []
+      });
+    }
   }
 };
 </script>
