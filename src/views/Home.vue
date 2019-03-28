@@ -94,25 +94,16 @@ export default {
           id: 1,
           foods: [
             {
-              food: "Proteína en polvo",
-              kcal: 159
-            },
-            {
-              food: "Fresas",
-              kcal: 15
-            }
-          ]
-        },
-        {
-          id: 2,
-          foods: [
-            {
-              food: "Proteína en polvo",
-              kcal: 159
-            },
-            {
-              food: "Proteína en polvo",
-              kcal: 159
+              id: 0,
+              food: "",
+              quantity: 0,
+              measure: "",
+              portion: 0,
+              unit: "",
+              protein: 0,
+              carbs: 0,
+              fat: 0,
+              kcal: 0
             }
           ]
         }
