@@ -22,10 +22,10 @@
       </b-field>
     </td>
     <td>{{ food.unit }}</td>
-    <td>{{ protein }}</td>
-    <td>{{ carbs }}</td>
-    <td>{{ fat }}</td>
-    <td>{{ kcal }}</td>
+    <td>{{ protein | roundNumber }}</td>
+    <td>{{ carbs | roundNumber }}</td>
+    <td>{{ fat | roundNumber }}</td>
+    <td>{{ kcal | roundNumber }}</td>
   </tr>
 </template>
 
@@ -64,6 +64,18 @@ export default {
     },
     "food.portion": function(val) {
       this.input.portion = val;
+    },
+    protein: function(newVal, oldVal) {
+      this.$emit("foodProteinChanged", { newVal, oldVal });
+    },
+    carbs: function(newVal, oldVal) {
+      this.$emit("foodCarbsChanged", { newVal, oldVal });
+    },
+    fat: function(newVal, oldVal) {
+      this.$emit("foodFatChanged", { newVal, oldVal });
+    },
+    kcal: function(newVal, oldVal) {
+      this.$emit("foodKcalChanged", { newVal, oldVal });
     }
   },
   created() {

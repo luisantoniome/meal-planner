@@ -13,14 +13,24 @@
         </div>
         <div class="tile is-parent">
           <div class="tile is-child box">
-            <p class="title">{{ kcal.total }} / {{ kcal.needed }}</p>
+            <p class="title">
+              {{ kcal.total | roundNumber }} / {{ kcal.needed }}
+            </p>
             <p class="subtitle">kcal</p>
           </div>
         </div>
       </div>
     </section>
     <section class="container is-fluid">
-      <MealCard v-for="meal in meals" :key="meal.id" :meal="meal" />
+      <MealCard
+        v-for="meal in meals"
+        :key="meal.id"
+        :meal="meal"
+        @mealProteinChanged="calculateTotalProtein"
+        @mealCarbsChanged="calculateTotalCarbs"
+        @mealFatChanged="calculateTotalFat"
+        @mealKcalChanged="calculateTotalKcal"
+      />
       <button class="button is-info" @click="addMeal()">
         Add meal
       </button>
@@ -41,52 +51,52 @@ export default {
   data() {
     return {
       kcal: {
-        total: 700,
-        needed: 2300
+        total: 0,
+        needed: 1852
       },
       protein: {
         name: "Protein",
         percentage: {
-          total: 20,
-          needed: 40
+          total: 0,
+          needed: 45
         },
         g: {
-          total: 70,
-          needed: 100
+          total: 0,
+          needed: 208
         },
         kcal: {
-          total: 80,
-          needed: 100
+          total: 0,
+          needed: 834
         }
       },
       carbs: {
         name: "Carbs",
         percentage: {
-          total: 10,
-          needed: 20
+          total: 0,
+          needed: 30
         },
         g: {
-          total: 70,
-          needed: 100
+          total: 0,
+          needed: 139
         },
         kcal: {
-          total: 80,
-          needed: 100
+          total: 0,
+          needed: 556
         }
       },
       fat: {
         name: "Fat",
         percentage: {
-          total: 20,
-          needed: 40
+          total: 0,
+          needed: 25
         },
         g: {
-          total: 70,
-          needed: 100
+          total: 0,
+          needed: 51
         },
         kcal: {
-          total: 80,
-          needed: 100
+          total: 0,
+          needed: 463
         }
       },
       meals: [
@@ -116,6 +126,37 @@ export default {
         id: 3,
         foods: []
       });
+    },
+    calculateMacroPercentage(macroKcal) {
+      return (macroKcal / this.kcal.total) * 100;
+    },
+    calculateTotalProtein(protein) {
+      const oldVal = protein.oldVal || 0;
+      this.protein.g.total = this.protein.g.total - oldVal + protein.newVal;
+      this.protein.kcal.total = this.protein.g.total * 4;
+    },
+    calculateTotalCarbs(carbs) {
+      const oldVal = carbs.oldVal || 0;
+      this.carbs.g.total = this.carbs.g.total - oldVal + carbs.newVal;
+      this.carbs.kcal.total = this.carbs.g.total * 4;
+    },
+    calculateTotalFat(fat) {
+      const oldVal = fat.oldVal || 0;
+      this.fat.g.total = this.fat.g.total - oldVal + fat.newVal;
+      this.fat.kcal.total = this.fat.g.total * 9;
+    },
+    calculateTotalKcal(kcal) {
+      const oldVal = kcal.oldVal || 0;
+      this.kcal.total = this.kcal.total - oldVal + kcal.newVal;
+      this.protein.percentage.total = this.calculateMacroPercentage(
+        this.protein.kcal.total
+      );
+      this.carbs.percentage.total = this.calculateMacroPercentage(
+        this.carbs.kcal.total
+      );
+      this.fat.percentage.total = this.calculateMacroPercentage(
+        this.fat.kcal.total
+      );
     }
   }
 };
