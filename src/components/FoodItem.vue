@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td>
+    <td width="400">
       <b-autocomplete
         v-model="food.food"
         :data="foods"
@@ -88,11 +88,17 @@ export default {
     },
     getAsyncData: debounce(function(query) {
       api.searchFood(query).then(res => {
+        res.forEach(item => {
+          if (item.brand_name) {
+            item.food_name = `(${item.brand_name}) ${item.food_name}`;
+          }
+        });
         this.foods = res;
       });
     }, 500),
     setSelectedFood(food) {
       if (food) {
+        this.food.brand = food.brand_name;
         this.food.quantity = food.quantity;
         this.food.measure = food.measure;
         this.input.portion = food.portion;

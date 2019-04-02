@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-content">
       <div class="columns">
-        <div class="column is-four-fifths">
+        <div class="column">
           <table class="table is-fullwidth">
             <thead>
               <tr>
@@ -30,7 +30,7 @@
             </tbody>
           </table>
         </div>
-        <div class="column">
+        <div class="column is-narrow">
           <div class="box">
             <p>{{ kcal | roundNumber }} kcal</p>
             <p>{{ protein | roundNumber }}g P</p>
