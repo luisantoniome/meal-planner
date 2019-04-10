@@ -17,6 +17,12 @@
               {{ kcal.total | roundNumber }} / {{ kcal.needed }}
             </p>
             <p class="subtitle">kcal</p>
+            <progress
+              class="progress"
+              :class="{ 'is-danger': exceeded }"
+              :value="kcal.total"
+              :max="kcal.needed"
+            ></progress>
           </div>
         </div>
       </div>
@@ -119,6 +125,11 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    exceeded() {
+      return this.kcal.total > this.kcal.needed;
+    }
   },
   methods: {
     addMeal() {
