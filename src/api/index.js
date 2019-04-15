@@ -13,6 +13,19 @@ const api = {
     } catch (error) {
       console.error(error);
     }
+  },
+
+  brands: () => get("foods/brands"),
+
+  searchByBrand: async brandId => {
+    try {
+      const result = await get("foods/search-by-brand", {
+        params: { brandId }
+      });
+      return result.data.response;
+    } catch (error) {
+      console.error(error);
+    }
   }
 };
 

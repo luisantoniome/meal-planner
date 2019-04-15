@@ -17,6 +17,20 @@
       </div>
     </section>
     <div class="container is-fluid">
+      <section class="section">
+        <b-field label="Brand">
+          <b-select value="0" @input="searchByBrand">
+            <option value="0">
+              All
+            </option>
+            <option v-for="brand in brands" :value="brand.id" :key="brand.id">
+              {{ brand.brand_name }}
+            </option>
+          </b-select>
+        </b-field>
+      </section>
+    </div>
+    <div class="container is-fluid">
       <AddFood v-if="addFoodForm" @cancel="addFoodForm = false" />
       <b-table
         v-else
@@ -58,6 +72,7 @@ export default {
         { field: "sodium", label: "sodium (mg)" },
         { field: "v12", label: "v12" }
       ],
+      brands: [],
       isLoading: true,
       addFoodForm: false
     };
@@ -90,6 +105,38 @@ export default {
 
       this.isLoading = false;
     });
+
+    api.brands().then(res => {
+      res.data.response.forEach(brand => {
+        this.brands.push(brand);
+      });
+    });
+  },
+  methods: {
+    searchByBrand: function(brandId) {
+      this.data = [];
+      api.searchByBrand(brandId).then(res => {
+        res.forEach(food => {
+          this.data.push({
+            food: `${food.food_name} (${food.brand_name})`,
+            qty: `${food.quantity} ${food.measure}`,
+            portion: `${food.portion} ${food.unit}`,
+            kcal: food.kcal,
+            protein: food.protein,
+            carbs: food.carbs,
+            fat: food.fat,
+            s_fat: food.saturated_fat,
+            t_fat: food.trans_fat,
+            m_fat: food.mono_fat,
+            p_fat: food.poly_fat,
+            sugar: food.sugar,
+            fiber: food.fiber,
+            sodium: food.sodium,
+            v12: food.vitamin_b12
+          });
+        });
+      });
+    }
   }
 };
 </script>
