@@ -18,16 +18,41 @@
     </section>
     <div class="container is-fluid">
       <section class="section">
-        <b-field label="Brand">
-          <b-select value="0" @input="searchByBrand">
-            <option value="0">
-              All
-            </option>
-            <option v-for="brand in brands" :value="brand.id" :key="brand.id">
-              {{ brand.brand_name }}
-            </option>
-          </b-select>
-        </b-field>
+        <div class="columns">
+          <div class="column is-narrow">
+            <b-field label="Brand">
+              <b-select @input="filter" v-model="brands.selected">
+                <option value="0">
+                  All
+                </option>
+                <option
+                  v-for="brand in brands.all"
+                  :value="brand.id"
+                  :key="brand.id"
+                >
+                  {{ brand.brand_name }}
+                </option>
+              </b-select>
+            </b-field>
+          </div>
+          <div class="column">
+            <div class="columns is-multiline">
+              <div
+                class="column is-narrow"
+                v-for="tag in tags.all"
+                :key="tag.id"
+              >
+                <b-checkbox
+                  v-model="tags.selected"
+                  :native-value="tag.id"
+                  @input="filter"
+                >
+                  {{ tag.tag }}
+                </b-checkbox>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
     <div class="container is-fluid">
@@ -72,7 +97,14 @@ export default {
         { field: "sodium", label: "sodium (mg)" },
         { field: "v12", label: "v12" }
       ],
-      brands: [],
+      brands: {
+        all: [],
+        selected: 0
+      },
+      tags: {
+        all: [],
+        selected: []
+      },
       isLoading: true,
       addFoodForm: false
     };
@@ -107,15 +139,17 @@ export default {
     });
 
     api.brands().then(res => {
-      res.data.response.forEach(brand => {
-        this.brands.push(brand);
-      });
+      res.data.response.forEach(brand => this.brands.all.push(brand));
+    });
+
+    api.tags().then(res => {
+      res.data.response.forEach(tag => this.tags.all.push(tag));
     });
   },
   methods: {
-    searchByBrand: function(brandId) {
+    filter: function() {
       this.data = [];
-      api.searchByBrand(brandId).then(res => {
+      api.filter(this.brands.selected, this.tags.selected).then(res => {
         res.forEach(food => {
           this.data.push({
             food: `${food.food_name} (${food.brand_name})`,

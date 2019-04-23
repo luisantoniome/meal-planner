@@ -17,16 +17,18 @@ const api = {
 
   brands: () => get("foods/brands"),
 
-  searchByBrand: async brandId => {
+  filter: async (brand, tags) => {
     try {
-      const result = await get("foods/search-by-brand", {
-        params: { brandId }
+      const result = await get("foods/filter", {
+        params: { brand, tags }
       });
       return result.data.response;
     } catch (error) {
       console.error(error);
     }
-  }
+  },
+
+  tags: () => get("tags")
 };
 
 export default api;
