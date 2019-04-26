@@ -95,6 +95,7 @@ export default {
         { field: "sugar", label: "sugar (g)" },
         { field: "fiber", label: "fiber (g)" },
         { field: "sodium", label: "sodium (mg)" },
+        { field: "cholesterol", label: "cholesterol (mg)" },
         { field: "v12", label: "v12" }
       ],
       brands: {
@@ -131,6 +132,7 @@ export default {
           sugar: food.sugar,
           fiber: food.fiber,
           sodium: food.sodium,
+          cholesterol: food.cholesterol,
           v12: food.vitamin_b12
         });
       });
@@ -166,6 +168,7 @@ export default {
             sugar: food.sugar,
             fiber: food.fiber,
             sodium: food.sodium,
+            cholesterol: food.cholesterol,
             v12: food.vitamin_b12
           });
         });
