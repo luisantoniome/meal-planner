@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters } from "vuex";
 import MacronutrientTile from "@/components/MacronutrientTile.vue";
 import MealCard from "@/components/MealCard.vue";
 
@@ -56,55 +57,6 @@ export default {
   },
   data() {
     return {
-      kcal: {
-        total: 0,
-        needed: 1852
-      },
-      protein: {
-        name: "Protein",
-        percentage: {
-          total: 0,
-          needed: 45
-        },
-        g: {
-          total: 0,
-          needed: 208
-        },
-        kcal: {
-          total: 0,
-          needed: 834
-        }
-      },
-      carbs: {
-        name: "Carbs",
-        percentage: {
-          total: 0,
-          needed: 30
-        },
-        g: {
-          total: 0,
-          needed: 139
-        },
-        kcal: {
-          total: 0,
-          needed: 556
-        }
-      },
-      fat: {
-        name: "Fat",
-        percentage: {
-          total: 0,
-          needed: 25
-        },
-        g: {
-          total: 0,
-          needed: 51
-        },
-        kcal: {
-          total: 0,
-          needed: 463
-        }
-      },
       meals: [
         {
           id: 1,
@@ -127,9 +79,16 @@ export default {
     };
   },
   computed: {
+    ...mapState(["kcal", "protein", "carbs", "fat"]),
+    ...mapGetters(["protein"]),
     exceeded() {
       return this.kcal.total > this.kcal.needed;
     }
+  },
+  created() {
+    console.log(this.$store.state.kcal.total);
+    // this.$store.commit("incrementKcal");
+    console.log(this.$store.state.kcal.total);
   },
   methods: {
     addMeal() {
@@ -157,8 +116,8 @@ export default {
       this.fat.kcal.total = this.fat.g.total * 9;
     },
     calculateTotalKcal(kcal) {
-      const oldVal = kcal.oldVal || 0;
-      this.kcal.total = this.kcal.total - oldVal + kcal.newVal;
+      // const oldVal = kcal.oldVal || 0;
+      // this.kcal.total = this.kcal.total - oldVal + kcal.newVal;
       this.protein.percentage.total = this.calculateMacroPercentage(
         this.protein.kcal.total
       );

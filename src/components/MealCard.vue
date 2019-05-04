@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import FoodItem from "@/components/FoodItem.vue";
 
 export default {
@@ -78,13 +79,15 @@ export default {
       this.$emit("mealFatChanged", { newVal, oldVal });
     },
     kcal: function(newVal, oldVal) {
-      this.$emit("mealKcalChanged", { newVal, oldVal });
+      this.calculateTotalKcal({ newVal, oldVal });
+      // this.$emit("mealKcalChanged", { newVal, oldVal });
     }
   },
   created() {
     // console.log(this.meal.foods[0]);
   },
   methods: {
+    ...mapMutations(["calculateTotalKcal"]),
     addFood() {
       this.meal.foods.push({
         id: 0,
