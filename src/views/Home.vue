@@ -14,29 +14,21 @@
         <div class="tile is-parent">
           <div class="tile is-child box">
             <p class="title">
-              {{ kcal.total | roundNumber }} / {{ kcal.needed }}
+              {{ totalKcal | roundNumber }} / {{ kcalRequired }}
             </p>
             <p class="subtitle">kcal</p>
             <progress
               class="progress"
               :class="{ 'is-danger': exceeded }"
-              :value="kcal.total"
-              :max="kcal.needed"
+              :value="totalKcal"
+              :max="kcalRequired"
             ></progress>
           </div>
         </div>
       </div>
     </section>
     <section class="container is-fluid">
-      <MealCard
-        v-for="meal in meals"
-        :key="meal.id"
-        :meal="meal"
-        @mealProteinChanged="calculateTotalProtein"
-        @mealCarbsChanged="calculateTotalCarbs"
-        @mealFatChanged="calculateTotalFat"
-        @mealKcalChanged="calculateTotalKcal"
-      />
+      <MealCard v-for="meal in meals" :key="meal.id" :meal="meal" />
       <button class="button is-info" @click="addMeal()">
         Add meal
       </button>
@@ -79,16 +71,84 @@ export default {
     };
   },
   computed: {
-    ...mapState(["kcal", "protein", "carbs", "fat"]),
-    ...mapGetters(["protein"]),
+    ...mapState([
+      "kcalRequired",
+      "totalKcal",
+      "proteinPercentageRequired",
+      "proteinPercentageTotal",
+      "proteinGramsTotal",
+      "proteinKcalTotal",
+      "carbsPercentageRequired",
+      "carbsPercentageTotal",
+      "carbsGramsTotal",
+      "carbsKcalTotal",
+      "fatPercentageRequired",
+      "fatPercentageTotal",
+      "fatGramsTotal",
+      "fatKcalTotal"
+    ]),
+    ...mapGetters([
+      "proteinKcalRequired",
+      "proteinGramsRequired",
+      "carbsKcalRequired",
+      "carbsGramsRequired",
+      "fatKcalRequired",
+      "fatGramsRequired"
+    ]),
+    protein() {
+      return {
+        name: "Protein",
+        percentage: {
+          total: this.proteinPercentageTotal,
+          needed: this.proteinPercentageRequired
+        },
+        g: {
+          total: this.proteinGramsTotal,
+          needed: this.proteinGramsRequired
+        },
+        kcal: {
+          total: this.proteinKcalTotal,
+          needed: this.proteinKcalRequired
+        }
+      };
+    },
+    carbs() {
+      return {
+        name: "Carbs",
+        percentage: {
+          total: this.carbsPercentageTotal,
+          needed: this.carbsPercentageRequired
+        },
+        g: {
+          total: this.carbsGramsTotal,
+          needed: this.carbsGramsRequired
+        },
+        kcal: {
+          total: this.carbsKcalTotal,
+          needed: this.carbsKcalRequired
+        }
+      };
+    },
+    fat() {
+      return {
+        name: "Fat",
+        percentage: {
+          total: this.fatPercentageTotal,
+          needed: this.fatPercentageRequired
+        },
+        g: {
+          total: this.fatGramsTotal,
+          needed: this.fatGramsRequired
+        },
+        kcal: {
+          total: this.fatKcalTotal,
+          needed: this.fatKcalRequired
+        }
+      };
+    },
     exceeded() {
-      return this.kcal.total > this.kcal.needed;
+      return this.totalKcal > this.kcalRequired;
     }
-  },
-  created() {
-    console.log(this.$store.state.kcal.total);
-    // this.$store.commit("incrementKcal");
-    console.log(this.$store.state.kcal.total);
   },
   methods: {
     addMeal() {
@@ -96,37 +156,6 @@ export default {
         id: 3,
         foods: []
       });
-    },
-    calculateMacroPercentage(macroKcal) {
-      return (macroKcal / this.kcal.total) * 100;
-    },
-    calculateTotalProtein(protein) {
-      const oldVal = protein.oldVal || 0;
-      this.protein.g.total = this.protein.g.total - oldVal + protein.newVal;
-      this.protein.kcal.total = this.protein.g.total * 4;
-    },
-    calculateTotalCarbs(carbs) {
-      const oldVal = carbs.oldVal || 0;
-      this.carbs.g.total = this.carbs.g.total - oldVal + carbs.newVal;
-      this.carbs.kcal.total = this.carbs.g.total * 4;
-    },
-    calculateTotalFat(fat) {
-      const oldVal = fat.oldVal || 0;
-      this.fat.g.total = this.fat.g.total - oldVal + fat.newVal;
-      this.fat.kcal.total = this.fat.g.total * 9;
-    },
-    calculateTotalKcal(kcal) {
-      // const oldVal = kcal.oldVal || 0;
-      // this.kcal.total = this.kcal.total - oldVal + kcal.newVal;
-      this.protein.percentage.total = this.calculateMacroPercentage(
-        this.protein.kcal.total
-      );
-      this.carbs.percentage.total = this.calculateMacroPercentage(
-        this.carbs.kcal.total
-      );
-      this.fat.percentage.total = this.calculateMacroPercentage(
-        this.fat.kcal.total
-      );
     }
   }
 };

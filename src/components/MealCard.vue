@@ -70,24 +70,28 @@ export default {
   },
   watch: {
     protein: function(newVal, oldVal) {
-      this.$emit("mealProteinChanged", { newVal, oldVal });
+      this.calculateTotalProtein({ newVal, oldVal });
     },
     carbs: function(newVal, oldVal) {
-      this.$emit("mealCarbsChanged", { newVal, oldVal });
+      this.calculateTotalCarbs({ newVal, oldVal });
     },
     fat: function(newVal, oldVal) {
-      this.$emit("mealFatChanged", { newVal, oldVal });
+      this.calculateTotalFat({ newVal, oldVal });
     },
     kcal: function(newVal, oldVal) {
       this.calculateTotalKcal({ newVal, oldVal });
-      // this.$emit("mealKcalChanged", { newVal, oldVal });
     }
   },
   created() {
     // console.log(this.meal.foods[0]);
   },
   methods: {
-    ...mapMutations(["calculateTotalKcal"]),
+    ...mapMutations([
+      "calculateTotalKcal",
+      "calculateTotalProtein",
+      "calculateTotalCarbs",
+      "calculateTotalFat"
+    ]),
     addFood() {
       this.meal.foods.push({
         id: 0,
