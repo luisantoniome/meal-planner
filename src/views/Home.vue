@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapMutations } from "vuex";
 import MacronutrientTile from "@/components/MacronutrientTile.vue";
 import MealCard from "@/components/MealCard.vue";
 
@@ -46,29 +46,6 @@ export default {
   components: {
     MacronutrientTile,
     MealCard
-  },
-  data() {
-    return {
-      meals: [
-        {
-          id: 1,
-          foods: [
-            {
-              id: 0,
-              food: "",
-              quantity: 0,
-              measure: "",
-              portion: 0,
-              unit: "",
-              protein: 0,
-              carbs: 0,
-              fat: 0,
-              kcal: 0
-            }
-          ]
-        }
-      ]
-    };
   },
   computed: {
     ...mapState([
@@ -85,7 +62,8 @@ export default {
       "fatPercentageRequired",
       "fatPercentageTotal",
       "fatGramsTotal",
-      "fatKcalTotal"
+      "fatKcalTotal",
+      "meals"
     ]),
     ...mapGetters([
       "proteinKcalRequired",
@@ -151,12 +129,7 @@ export default {
     }
   },
   methods: {
-    addMeal() {
-      this.meals.push({
-        id: 3,
-        foods: []
-      });
-    }
+    ...mapMutations(["addMeal"])
   }
 };
 </script>

@@ -24,7 +24,27 @@ export default new Vuex.Store({
     fatPercentageRequired: 35,
     fatPercentageTotal: 0,
     fatGramsTotal: 0,
-    fatKcalTotal: 0
+    fatKcalTotal: 0,
+
+    meals: [
+      {
+        id: 1,
+        foods: [
+          {
+            id: 0,
+            food: "",
+            quantity: 0,
+            measure: "",
+            portion: 0,
+            unit: "",
+            protein: 0,
+            carbs: 0,
+            fat: 0,
+            kcal: 0
+          }
+        ]
+      }
+    ]
   },
   getters: {
     proteinKcalRequired: state => {
@@ -78,6 +98,25 @@ export default new Vuex.Store({
       const oldVal = payload.oldVal || 0;
       state.fatGramsTotal = state.fatGramsTotal - oldVal + payload.newVal;
       state.fatKcalTotal = state.fatGramsTotal * 9;
+    },
+    addMeal(state) {
+      state.meals.push({
+        id: state.meals.length + 1,
+        foods: [
+          {
+            id: 0,
+            food: "",
+            quantity: 0,
+            measure: "",
+            portion: 0,
+            unit: "",
+            protein: 0,
+            carbs: 0,
+            fat: 0,
+            kcal: 0
+          }
+        ]
+      });
     }
   },
   actions: {}
