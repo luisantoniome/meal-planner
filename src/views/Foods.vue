@@ -22,9 +22,8 @@
           <div class="column is-narrow">
             <b-field label="Brand">
               <b-select @input="filter" v-model="brands.selected">
-                <option value="0">
-                  All
-                </option>
+                <option value="-1">All</option>
+                <option value="0">No brand</option>
                 <option
                   v-for="brand in brands.all"
                   :value="brand.id"
@@ -156,7 +155,7 @@ export default {
       data: [],
       brands: {
         all: [],
-        selected: 0
+        selected: -1
       },
       tags: {
         all: [],
