@@ -26,6 +26,9 @@ export default new Vuex.Store({
     fatGramsTotal: 0,
     fatKcalTotal: 0,
 
+    sugarGramsRequired: 50,
+    sugarGramsTotal: 0,
+
     meals: [
       {
         id: 1,
@@ -98,6 +101,10 @@ export default new Vuex.Store({
       const oldVal = payload.oldVal || 0;
       state.fatGramsTotal = state.fatGramsTotal - oldVal + payload.newVal;
       state.fatKcalTotal = state.fatGramsTotal * 9;
+    },
+    calculateTotalSugar(state, payload) {
+      const oldVal = payload.oldVal || 0;
+      state.sugarGramsTotal = state.sugarGramsTotal - oldVal + payload.newVal;
     },
     addMeal(state) {
       state.meals.push({

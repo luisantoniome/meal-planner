@@ -14,6 +14,20 @@
         <div class="tile is-parent">
           <div class="tile is-child box">
             <p class="title">
+              {{ sugarGramsTotal | roundNumber }} / {{ sugarGramsRequired }}g
+            </p>
+            <p class="subtitle">sugar</p>
+            <progress
+              class="progress"
+              :class="isSugarExceeded()"
+              :value="sugarGramsTotal"
+              :max="sugarGramsRequired"
+            ></progress>
+          </div>
+        </div>
+        <div class="tile is-parent">
+          <div class="tile is-child box">
+            <p class="title">
               {{ totalKcal | roundNumber }} / {{ kcalRequired }}
             </p>
             <p class="subtitle">kcal</p>
@@ -63,6 +77,8 @@ export default {
       "fatPercentageTotal",
       "fatGramsTotal",
       "fatKcalTotal",
+      "sugarGramsRequired",
+      "sugarGramsTotal",
       "meals"
     ]),
     ...mapGetters([
@@ -124,12 +140,18 @@ export default {
         }
       };
     },
+    sugarExceeded() {
+      return this.sugarGramsTotal > this.sugarGramsRequired;
+    },
     exceeded() {
       return this.totalKcal > this.kcalRequired;
     }
   },
   methods: {
-    ...mapMutations(["addMeal"])
+    ...mapMutations(["addMeal"]),
+    isSugarExceeded() {
+      return this.sugarExceeded ? "is-danger" : "is-link";
+    }
   }
 };
 </script>

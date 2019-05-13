@@ -25,11 +25,13 @@
     <td>{{ protein | roundNumber }}</td>
     <td>{{ carbs | roundNumber }}</td>
     <td>{{ fat | roundNumber }}</td>
+    <td>{{ sugar | roundNumber }}</td>
     <td>{{ kcal | roundNumber }}</td>
   </tr>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 import api from "@/api";
 import debounce from "lodash/debounce";
 
@@ -54,6 +56,9 @@ export default {
     fat() {
       return this.calculate(this.food.fat);
     },
+    sugar() {
+      return this.calculate(this.food.sugar);
+    },
     kcal() {
       return this.calculate(this.food.kcal);
     }
@@ -74,6 +79,9 @@ export default {
     fat: function(newVal, oldVal) {
       this.$emit("foodFatChanged", { newVal, oldVal });
     },
+    sugar: function(newVal, oldVal) {
+      this.calculateTotalSugar({ newVal, oldVal });
+    },
     kcal: function(newVal, oldVal) {
       this.$emit("foodKcalChanged", { newVal, oldVal });
     }
@@ -83,6 +91,7 @@ export default {
     this.setBasePortion();
   },
   methods: {
+    ...mapMutations(["calculateTotalSugar"]),
     calculate(property) {
       return (this.input.portion * property) / this.food.portion;
     },
@@ -107,6 +116,7 @@ export default {
         this.food.protein = food.protein;
         this.food.fat = food.fat;
         this.food.carbs = food.carbs;
+        this.food.sugar = food.sugar;
         this.food.kcal = food.kcal;
         this.setBasePortion();
       }

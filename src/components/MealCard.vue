@@ -14,6 +14,7 @@
                 <th><abbr title="Protein">Prot (g)</abbr></th>
                 <th><abbr title="Carbs">Carb (g)</abbr></th>
                 <th><abbr title="Fat">Fat (g)</abbr></th>
+                <th><abbr title="Sugar">Sug (g)</abbr></th>
                 <th>kcal</th>
               </tr>
             </thead>
