@@ -11,10 +11,12 @@
                 <th>Measure</th>
                 <th>Portion</th>
                 <th>Unit</th>
-                <th><abbr title="Protein">Prot (g)</abbr></th>
-                <th><abbr title="Carbs">Carb (g)</abbr></th>
-                <th><abbr title="Fat">Fat (g)</abbr></th>
-                <th><abbr title="Sugar">Sug (g)</abbr></th>
+                <th><abbr title="Protein">P (g)</abbr></th>
+                <th><abbr title="Carbs">C (g)</abbr></th>
+                <th><abbr title="Fat">F (g)</abbr></th>
+                <th class="has-text-info">
+                  <abbr title="Sugar">S (g)</abbr>
+                </th>
                 <th>kcal</th>
               </tr>
             </thead>

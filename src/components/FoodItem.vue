@@ -15,18 +15,20 @@
         <b-input v-model="food.quantity"></b-input>
       </b-field>
     </td>
-    <td>{{ food.measure }}</td>
+    <td class="is-size-7">{{ food.measure }}</td>
     <td width="10">
       <b-field>
-        <b-input v-model="input.portion"></b-input>
+        <b-input v-model="input.portion" disabled></b-input>
       </b-field>
     </td>
-    <td>{{ food.unit }}</td>
+    <td class="is-size-7">{{ food.unit }}</td>
     <td>{{ protein | roundNumber }}</td>
     <td>{{ carbs | roundNumber }}</td>
     <td>{{ fat | roundNumber }}</td>
-    <td>{{ sugar | roundNumber }}</td>
-    <td>{{ kcal | roundNumber }}</td>
+    <td class="has-text-info">{{ sugar | roundNumber }}</td>
+    <td>
+      <strong>{{ kcal | roundNumber }}</strong>
+    </td>
   </tr>
 </template>
 
