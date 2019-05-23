@@ -36,6 +36,31 @@
           </div>
           <div class="column">
             <div class="columns is-multiline">
+              <div class="column is-narrow">
+                <b-checkbox v-model="filterOptions.protein" @input="filter">
+                  Rico en proteína
+                </b-checkbox>
+              </div>
+              <div class="column is-narrow">
+                <b-checkbox v-model="filterOptions.carbs" @input="filter">
+                  Rico en carbohidratos
+                </b-checkbox>
+              </div>
+              <div class="column is-narrow">
+                <b-checkbox v-model="filterOptions.fat" @input="filter">
+                  Rico en grasas
+                </b-checkbox>
+              </div>
+              <div class="column is-narrow">
+                <b-checkbox v-model="filterOptions.cholesterol" @input="filter">
+                  Contiene colesterol
+                </b-checkbox>
+              </div>
+              <div class="column is-narrow">
+                <b-checkbox v-model="filterOptions.v12" @input="filter">
+                  Contiene vitamina B12
+                </b-checkbox>
+              </div>
               <div
                 class="column is-narrow"
                 v-for="tag in tags.all"
@@ -161,6 +186,13 @@ export default {
         all: [],
         selected: []
       },
+      filterOptions: {
+        protein: false,
+        carbs: false,
+        fat: false,
+        v12: false,
+        cholesterol: false
+      },
       isLoading: true,
       addFoodForm: false
     };
@@ -230,6 +262,36 @@ export default {
             v12: food.vitamin_b12,
             tags: food.tags
           });
+
+          if (this.filterOptions.protein) {
+            this.data = this.data.filter(food => {
+              return food.protein > food.carbs && food.protein > food.fat;
+            });
+          }
+
+          if (this.filterOptions.carbs) {
+            this.data = this.data.filter(food => {
+              return food.carbs > food.protein && food.carbs > food.fat;
+            });
+          }
+
+          if (this.filterOptions.fat) {
+            this.data = this.data.filter(food => {
+              return food.fat > food.protein && food.fat > food.carbs;
+            });
+          }
+
+          if (this.filterOptions.v12) {
+            this.data = this.data.filter(food => {
+              return food.v12 > 0;
+            });
+          }
+
+          if (this.filterOptions.cholesterol) {
+            this.data = this.data.filter(food => {
+              return food.cholesterol > 0;
+            });
+          }
         });
       });
     }
