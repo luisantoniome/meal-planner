@@ -57,6 +57,11 @@
                 </b-checkbox>
               </div>
               <div class="column is-narrow">
+                <b-checkbox v-model="filterOptions.dairy" @input="filter">
+                  Contiene lácteos
+                </b-checkbox>
+              </div>
+              <div class="column is-narrow">
                 <b-checkbox v-model="filterOptions.v12" @input="filter">
                   Contiene vitamina B12
                 </b-checkbox>
@@ -190,8 +195,9 @@ export default {
         protein: false,
         carbs: false,
         fat: false,
+        cholesterol: false,
+        dairy: false,
         v12: false,
-        cholesterol: false
       },
       isLoading: true,
       addFoodForm: false
@@ -222,6 +228,7 @@ export default {
           sodium: food.sodium,
           cholesterol: food.cholesterol,
           v12: food.vitamin_b12,
+          dairy: food.dairy,
           tags: food.tags
         });
       });
@@ -260,39 +267,46 @@ export default {
             sodium: food.sodium,
             cholesterol: food.cholesterol,
             v12: food.vitamin_b12,
+            dairy: food.dairy,
             tags: food.tags
           });
-
-          if (this.filterOptions.protein) {
-            this.data = this.data.filter(food => {
-              return food.protein > food.carbs && food.protein > food.fat;
-            });
-          }
-
-          if (this.filterOptions.carbs) {
-            this.data = this.data.filter(food => {
-              return food.carbs > food.protein && food.carbs > food.fat;
-            });
-          }
-
-          if (this.filterOptions.fat) {
-            this.data = this.data.filter(food => {
-              return food.fat > food.protein && food.fat > food.carbs;
-            });
-          }
-
-          if (this.filterOptions.v12) {
-            this.data = this.data.filter(food => {
-              return food.v12 > 0;
-            });
-          }
-
-          if (this.filterOptions.cholesterol) {
-            this.data = this.data.filter(food => {
-              return food.cholesterol > 0;
-            });
-          }
         });
+
+        if (this.filterOptions.protein) {
+          this.data = this.data.filter(food => {
+            return food.protein > food.carbs && food.protein > food.fat;
+          });
+        }
+
+        if (this.filterOptions.carbs) {
+          this.data = this.data.filter(food => {
+            return food.carbs > food.protein && food.carbs > food.fat;
+          });
+        }
+
+        if (this.filterOptions.fat) {
+          this.data = this.data.filter(food => {
+            return food.fat > food.protein && food.fat > food.carbs;
+          });
+        }
+
+        if (this.filterOptions.cholesterol) {
+          this.data = this.data.filter(food => {
+            return food.cholesterol > 0;
+          });
+        }
+
+        if (this.filterOptions.dairy) {
+          this.data = this.data.filter(food => {
+            return food.dairy;
+          });
+        }
+
+        if (this.filterOptions.v12) {
+          this.data = this.data.filter(food => {
+            return food.v12 > 0;
+          });
+        }
       });
     }
   }
