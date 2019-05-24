@@ -24,6 +24,11 @@
           Foods
         </router-link>
       </div>
+      <div class="navbar-end">
+        <router-link to="/settings" class="navbar-item">
+          Settings
+        </router-link>
+      </div>
     </div>
   </nav>
 </template>
