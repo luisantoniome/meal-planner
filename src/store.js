@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { calculateMacroPercentage } from "./helpers";
+import api from "@/api";
 
 Vue.use(Vuex);
 
@@ -123,6 +124,34 @@ export default new Vuex.Store({
             kcal: 0
           }
         ]
+      });
+    },
+    updateMeals(state, payload) {
+      state.meals = [];
+      payload.forEach(meal => {
+        let foods = [];
+        api.mealFoods(meal.meal_id).then(res => {
+          res.data.response.forEach(food => {
+            foods.push({
+              food: food.food_name,
+              brand: food.brand_id,
+              quantity: food.food_quantity,
+              measure: food.measure,
+              portion: food.portion,
+              unit: food.unit,
+              protein: food.protein,
+              fat: food.fat,
+              carbs: food.carbs,
+              sugar: food.sugar,
+              kcal: food.kcal
+            });
+          });
+        });
+
+        state.meals.push({
+          id: meal.meal_id,
+          foods
+        });
       });
     }
   },

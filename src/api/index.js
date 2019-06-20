@@ -28,7 +28,11 @@ const api = {
     }
   },
 
-  tags: () => get("tags")
+  tags: () => get("tags"),
+
+  plans: () => get("plans"),
+  planMeals: id => get("plans/meals", { params: { id } }),
+  mealFoods: id => get("plans/mealfoods", { params: { id } })
 };
 
 export default api;

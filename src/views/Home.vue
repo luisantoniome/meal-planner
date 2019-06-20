@@ -42,6 +42,17 @@
       </div>
     </section>
     <section class="container is-fluid">
+      <b-field label="Plans">
+        <b-select v-model="plans.selected">
+          <option value="-1">No plan</option>
+          <option v-for="plan in plans.all" :value="plan.id" :key="plan.id">
+            {{ plan.id }}
+          </option>
+        </b-select>
+      </b-field>
+      <button class="button is-info" @click="loadMealPlan()">
+        Load meal plan
+      </button>
       <MealCard v-for="meal in meals" :key="meal.id" :meal="meal" />
       <button class="button is-info" @click="addMeal()">
         Add meal
@@ -51,6 +62,7 @@
 </template>
 
 <script>
+import api from "@/api";
 import { mapState, mapGetters, mapMutations } from "vuex";
 import MacronutrientTile from "@/components/MacronutrientTile.vue";
 import MealCard from "@/components/MealCard.vue";
@@ -60,6 +72,14 @@ export default {
   components: {
     MacronutrientTile,
     MealCard
+  },
+  data() {
+    return {
+      plans: {
+        all: [],
+        selected: -1
+      }
+    };
   },
   computed: {
     ...mapState([
@@ -147,8 +167,18 @@ export default {
       return this.totalKcal > this.kcalRequired;
     }
   },
+  created() {
+    api.plans().then(res => {
+      res.data.response.forEach(plan => this.plans.all.push(plan));
+    });
+  },
   methods: {
-    ...mapMutations(["addMeal"]),
+    ...mapMutations(["addMeal", "updateMeals"]),
+    loadMealPlan() {
+      api.planMeals(this.plans.selected).then(res => {
+        this.updateMeals(res.data.response);
+      });
+    },
     isSugarExceeded() {
       return this.sugarExceeded ? "is-danger" : "is-link";
     }
