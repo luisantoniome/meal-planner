@@ -29,10 +29,7 @@ export default {
   props: ["macronutrient"],
   computed: {
     exceeded() {
-      return (
-        this.macronutrient.kcal.total >
-        this.macronutrient.kcal.needed
-      );
+      return this.macronutrient.kcal.total > this.macronutrient.kcal.needed;
     }
   },
   methods: {
