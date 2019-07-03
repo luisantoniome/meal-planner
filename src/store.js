@@ -9,15 +9,15 @@ export default new Vuex.Store({
   state: {
     goal: 0, // 0 fat loss, 1 muscle gain
 
-    kcalRequired: 1800,
+    kcalRequired: 2200,
     totalKcal: 0,
 
-    proteinPercentageRequired: 40,
+    proteinPercentageRequired: 25,
     proteinPercentageTotal: 0,
     proteinGramsTotal: 0,
     proteinKcalTotal: 0,
 
-    carbsPercentageRequired: 25,
+    carbsPercentageRequired: 40,
     carbsPercentageTotal: 0,
     carbsGramsTotal: 0,
     carbsKcalTotal: 0,
@@ -153,6 +153,9 @@ export default new Vuex.Store({
           foods
         });
       });
+    },
+    setKcalRequired(state, payload) {
+      state.kcalRequired = payload.newVal;
     }
   },
   actions: {}
