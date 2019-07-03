@@ -16,7 +16,7 @@
             <b-input v-model="weight"></b-input>
           </b-field>
           <b-field label="BMR (kcal)">
-            <b-input v-model="bmr"></b-input>
+            <b-input v-model="kcalRequired" :value="kcalRequired"></b-input>
           </b-field>
           <b-field label="Activity">
             <b-select>
@@ -35,13 +35,28 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
       goal: 0,
-      weight: 70,
-      bmr: 1600
+      weight: 70
     };
+  },
+  computed: {
+    ...mapState(["kcalRequired"])
+  },
+  watch: {
+    kcalRequired: function(newVal, oldVal) {
+      console.log(newVal, oldVal)
+    }
+  },
+  methods: {
+    ...mapMutations(["setKcalRequired"]),
+    updateKcalRequired: function(val) {
+      this.setKcalRequired(val);
+    }
   }
 };
 </script>
