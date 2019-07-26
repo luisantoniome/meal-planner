@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     goal: 0, // 0 fat loss, 1 muscle gain
 
-    kcalRequired: 2200,
+    kcalRequired: 2500,
     totalKcal: 0,
 
     proteinPercentageRequired: 25,

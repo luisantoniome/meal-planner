@@ -1,4 +1,6 @@
-# meal-planner
+# Meal Planner
+
+Meal Planner is a web app for building fat loss or muscle gain diet plans.
 
 ## Project setup
 ```
@@ -25,5 +27,6 @@ npm run test
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Screenshots
+
+![Home](https://res.cloudinary.com/luisantoniome/image/upload/c_scale,w_700/v1564152230/Meal%20Planner/19-07-26_Home.png)
