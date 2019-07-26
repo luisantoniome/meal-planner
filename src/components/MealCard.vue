@@ -17,6 +17,9 @@
                 <th class="has-text-info">
                   <abbr title="Sugar">S (g)</abbr>
                 </th>
+                <th class="has-text-link">
+                  <abbr title="Sodium">S (mg)</abbr>
+                </th>
                 <th>kcal</th>
               </tr>
             </thead>

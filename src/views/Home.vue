@@ -59,7 +59,7 @@
             <div class="level">
               <div class="level-left">
                 <div class="level">
-                  <p class="is-size-5 has-text-weight-bold">
+                  <p class="is-size-6 has-text-weight-bold">
                     Sugar
                   </p>
                 </div>
@@ -67,7 +67,8 @@
               <div class="level-right">
                 <div class="level-item">
                   <p class="is-size-6 has-text-weight-bold">
-                    {{ sugarGramsTotal | roundNumber }} / {{ sugarGramsRequired }}g
+                    {{ sugarGramsTotal | roundNumber }} /
+                    {{ sugarGramsRequired }}g
                   </p>
                 </div>
               </div>
@@ -77,6 +78,30 @@
               :class="isSugarExceeded()"
               :value="sugarGramsTotal"
               :max="sugarGramsRequired"
+            ></progress>
+          </div>
+          <div class="macronutrient">
+            <div class="level">
+              <div class="level-left">
+                <div class="level">
+                  <p class="is-size-6 has-text-weight-bold">
+                    Sodium
+                  </p>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <p class="is-size-7 has-text-weight-bold">
+                    {{ sodiumMGTotal | roundNumber }} / {{ sodiumMGRequired }}mg
+                  </p>
+                </div>
+              </div>
+            </div>
+            <progress
+              class="progress"
+              :class="isSodiumExceeded()"
+              :value="sodiumMGTotal"
+              :max="sodiumMGRequired"
             ></progress>
           </div>
         </section>
@@ -123,6 +148,8 @@ export default {
       "fatKcalTotal",
       "sugarGramsRequired",
       "sugarGramsTotal",
+      "sodiumMGRequired",
+      "sodiumMGTotal",
       "meals"
     ]),
     ...mapGetters([
@@ -187,6 +214,9 @@ export default {
     sugarExceeded() {
       return this.sugarGramsTotal > this.sugarGramsRequired;
     },
+    sodiumExceeded() {
+      return this.sodiumMGTotal > this.sodiumMGRequired;
+    },
     exceeded() {
       return this.totalKcal > this.kcalRequired;
     }
@@ -204,7 +234,10 @@ export default {
       });
     },
     isSugarExceeded() {
-      return this.sugarExceeded ? "is-danger" : "is-link";
+      return this.sugarExceeded ? "is-danger" : "is-info";
+    },
+    isSodiumExceeded() {
+      return this.sodiumExceeded ? "is-danger" : "is-link";
     }
   }
 };

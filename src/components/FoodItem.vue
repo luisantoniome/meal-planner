@@ -26,6 +26,7 @@
     <td>{{ carbs | roundNumber }}</td>
     <td>{{ fat | roundNumber }}</td>
     <td class="has-text-info">{{ sugar | roundNumber }}</td>
+    <td class="has-text-link">{{ sodium | roundNumber }}</td>
     <td>
       <strong>{{ kcal | roundNumber }}</strong>
     </td>
@@ -61,6 +62,9 @@ export default {
     sugar() {
       return this.calculate(this.food.sugar);
     },
+    sodium() {
+      return this.calculate(this.food.sodium);
+    },
     kcal() {
       return this.calculate(this.food.kcal);
     }
@@ -84,6 +88,9 @@ export default {
     sugar: function(newVal, oldVal) {
       this.calculateTotalSugar({ newVal, oldVal });
     },
+    sodium: function(newVal, oldVal) {
+      this.calculateTotalSodium({ newVal, oldVal });
+    },
     kcal: function(newVal, oldVal) {
       this.$emit("foodKcalChanged", { newVal, oldVal });
     }
@@ -93,7 +100,7 @@ export default {
     this.setBasePortion();
   },
   methods: {
-    ...mapMutations(["calculateTotalSugar"]),
+    ...mapMutations(["calculateTotalSugar", "calculateTotalSodium"]),
     calculate(property) {
       return (this.input.portion * property) / this.food.portion;
     },
@@ -119,6 +126,7 @@ export default {
         this.food.fat = food.fat;
         this.food.carbs = food.carbs;
         this.food.sugar = food.sugar;
+        this.food.sodium = food.sodium;
         this.food.kcal = food.kcal;
         this.setBasePortion();
       }

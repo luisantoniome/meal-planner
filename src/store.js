@@ -30,6 +30,9 @@ export default new Vuex.Store({
     sugarGramsRequired: 50,
     sugarGramsTotal: 0,
 
+    sodiumMGRequired: 2300,
+    sodiumMGTotal: 0,
+
     meals: [
       {
         id: 1,
@@ -106,6 +109,10 @@ export default new Vuex.Store({
     calculateTotalSugar(state, payload) {
       const oldVal = payload.oldVal || 0;
       state.sugarGramsTotal = state.sugarGramsTotal - oldVal + payload.newVal;
+    },
+    calculateTotalSodium(state, payload) {
+      const oldVal = payload.oldVal || 0;
+      state.sodiumMGTotal = state.sodiumMGTotal - oldVal + payload.newVal;
     },
     addMeal(state) {
       state.meals.push({
