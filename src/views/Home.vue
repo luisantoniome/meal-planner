@@ -1,36 +1,44 @@
 <template>
   <div class="home">
-    <section class="section">
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <MacronutrientTile :macronutrient="protein" />
-        </div>
-        <div class="tile is-parent">
-          <MacronutrientTile :macronutrient="carbs" />
-        </div>
-        <div class="tile is-parent">
-          <MacronutrientTile :macronutrient="fat" />
-        </div>
-        <div class="tile is-parent">
-          <div class="tile is-child box">
-            <p class="title">
-              {{ sugarGramsTotal | roundNumber }} / {{ sugarGramsRequired }}g
-            </p>
-            <p class="subtitle">sugar</p>
-            <progress
-              class="progress"
-              :class="isSugarExceeded()"
-              :value="sugarGramsTotal"
-              :max="sugarGramsRequired"
-            ></progress>
-          </div>
-        </div>
-        <div class="tile is-parent">
-          <div class="tile is-child box">
-            <p class="title">
-              {{ totalKcal | roundNumber }} / {{ kcalRequired }}
-            </p>
-            <p class="subtitle">kcal</p>
+    <div class="columns">
+      <div class="column">
+        <section class="container is-fluid">
+          <b-field label="Plans">
+            <b-select v-model="plans.selected">
+              <option value="-1">No plan</option>
+              <option v-for="plan in plans.all" :value="plan.id" :key="plan.id">
+                {{ plan.id }}
+              </option>
+            </b-select>
+          </b-field>
+          <button class="button is-info" @click="loadMealPlan()">
+            Load meal plan
+          </button>
+          <MealCard v-for="meal in meals" :key="meal.id" :meal="meal" />
+          <button class="button is-info" @click="addMeal()">
+            Add meal
+          </button>
+        </section>
+      </div>
+      <div class="column is-2 has-background-light sidebar">
+        <section class="section">
+          <div class="macronutrient">
+            <div class="level">
+              <div class="level-left">
+                <div class="level">
+                  <p class="is-size-6 has-text-weight-bold">
+                    {{ totalKcal | roundNumber }} / {{ kcalRequired }}
+                  </p>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <p class="is-size-5 has-text-weight-bold">
+                    kcal
+                  </p>
+                </div>
+              </div>
+            </div>
             <progress
               class="progress"
               :class="{ 'is-danger': exceeded }"
@@ -38,39 +46,55 @@
               :max="kcalRequired"
             ></progress>
           </div>
-        </div>
+          <div>
+            <Macronutrient :macronutrient="protein" />
+          </div>
+          <div>
+            <Macronutrient :macronutrient="carbs" />
+          </div>
+          <div>
+            <Macronutrient :macronutrient="fat" />
+          </div>
+          <div class="macronutrient">
+            <div class="level">
+              <div class="level-left">
+                <div class="level">
+                  <p class="is-size-5 has-text-weight-bold">
+                    Sugar
+                  </p>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  <p class="is-size-6 has-text-weight-bold">
+                    {{ sugarGramsTotal | roundNumber }} / {{ sugarGramsRequired }}g
+                  </p>
+                </div>
+              </div>
+            </div>
+            <progress
+              class="progress"
+              :class="isSugarExceeded()"
+              :value="sugarGramsTotal"
+              :max="sugarGramsRequired"
+            ></progress>
+          </div>
+        </section>
       </div>
-    </section>
-    <section class="container is-fluid">
-      <b-field label="Plans">
-        <b-select v-model="plans.selected">
-          <option value="-1">No plan</option>
-          <option v-for="plan in plans.all" :value="plan.id" :key="plan.id">
-            {{ plan.id }}
-          </option>
-        </b-select>
-      </b-field>
-      <button class="button is-info" @click="loadMealPlan()">
-        Load meal plan
-      </button>
-      <MealCard v-for="meal in meals" :key="meal.id" :meal="meal" />
-      <button class="button is-info" @click="addMeal()">
-        Add meal
-      </button>
-    </section>
+    </div>
   </div>
 </template>
 
 <script>
 import api from "@/api";
 import { mapState, mapGetters, mapMutations } from "vuex";
-import MacronutrientTile from "@/components/MacronutrientTile.vue";
+import Macronutrient from "@/components/Macronutrient.vue";
 import MealCard from "@/components/MealCard.vue";
 
 export default {
   name: "home",
   components: {
-    MacronutrientTile,
+    Macronutrient,
     MealCard
   },
   data() {
@@ -185,3 +209,18 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.sidebar {
+  height: 100vh;
+}
+
+.macronutrient {
+  margin-bottom: 1rem;
+}
+
+.level:not(:last-child),
+.progress:not(:last-child) {
+  margin-bottom: 0.25rem;
+}
+</style>
