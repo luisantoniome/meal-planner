@@ -2,7 +2,7 @@
   <div class="home">
     <div class="columns">
       <div class="column">
-        <section class="container is-fluid">
+        <section class="container">
           <b-field label="Plans">
             <b-select v-model="plans.selected">
               <option value="-1">No plan</option>

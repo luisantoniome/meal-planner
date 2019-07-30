@@ -1,6 +1,6 @@
 <template>
   <tr>
-    <td width="400">
+    <td width="450">
       <b-autocomplete
         v-model="food.food"
         :data="foods"
@@ -10,13 +10,13 @@
         @select="setSelectedFood"
       ></b-autocomplete>
     </td>
-    <td width="10">
+    <td width="75">
       <b-field>
         <b-input v-model="food.quantity"></b-input>
       </b-field>
     </td>
     <td class="is-size-7">{{ food.measure }}</td>
-    <td width="10">
+    <td width="75">
       <b-field>
         <b-input v-model="input.portion" disabled></b-input>
       </b-field>
