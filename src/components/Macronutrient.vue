@@ -36,7 +36,7 @@
         <div class="level-item">
           <p class="is-size-7">
             {{ macronutrient.kcal.total | roundNumber }} /
-            {{ macronutrient.kcal.needed }} kcal
+            {{ macronutrient.kcal.needed | roundNumber }} kcal
           </p>
         </div>
       </div>

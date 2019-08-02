@@ -1,3 +1,3 @@
 import Vue from "vue";
 
-Vue.filter("roundNumber", number => number.toFixed(1));
+Vue.filter("roundNumber", number => number.toFixed(0));
