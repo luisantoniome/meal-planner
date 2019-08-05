@@ -33,24 +33,18 @@
           ></FoodItem>
         </tbody>
       </table>
+      <button class="button is-rounded is-info is-small" @click="addFood()">
+        <span class="icon is-small">
+          <i class="fas fa-plus-circle"></i>
+        </span>
+      </button>
     </div>
     <footer class="card-footer">
-      <div class="card-footer-item">
-        <button class="button is-info" @click="addFood()">
-          Add food
-        </button>
-      </div>
+      <div class="card-footer-item">{{ protein | roundNumber }}g P</div>
+      <div class="card-footer-item">{{ carbs | roundNumber }}g C</div>
+      <div class="card-footer-item">{{ fat | roundNumber }}g F</div>
       <div class="card-footer-item has-text-weight-bold">
         {{ kcal | roundNumber }} kcal
-      </div>
-      <div class="card-footer-item has-text-weight-bold">
-        {{ protein | roundNumber }}g P
-      </div>
-      <div class="card-footer-item has-text-weight-bold">
-        {{ carbs | roundNumber }}g C
-      </div>
-      <div class="card-footer-item has-text-weight-bold">
-        {{ fat | roundNumber }}g F
       </div>
     </footer>
   </div>
@@ -131,3 +125,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.card {
+  margin: 1rem 0;
+}
+</style>
